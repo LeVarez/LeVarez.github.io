@@ -8,11 +8,14 @@
     <meta name="color-scheme" content="light dark">
 
     
+      <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; block-all-mixed-content; default-src 'self'; child-src 'self'; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net/; form-action 'self'; frame-src 'self'; img-src 'self'; object-src 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com/ https://cdn.jsdelivr.net/; script-src 'self' 'unsafe-inline' https://www.google-analytics.com; prefetch-src 'self'; connect-src 'self' https://www.google-analytics.com;">
 
     
+
+    <meta name="author" content="LeVarez">
     <meta name="description" content="This is some content
 if (LeVarez) let ueue = true; ">
-    <meta name="keywords" content="">
+    <meta name="keywords" content="blog,developer,personal">
 
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="This the test post"/>
@@ -48,6 +51,12 @@ if (LeVarez) let ueue = true; " />
     
 
     
+      
+        
+        
+        <link rel="stylesheet" href="/css/coder-dark.min.ccbbada2e264e4fdbf9b2181cccc2cdb289a63dc9520a1e96ac2b9a45778df29.css" integrity="sha256-zLutouJk5P2/myGBzMws2yiaY9yVIKHpasK5pFd43yk=" crossorigin="anonymous" media="screen" />
+      
+    
 
     
 
@@ -64,7 +73,9 @@ if (LeVarez) let ueue = true; " />
 
   
   
-  <body class="preload-transitions colorscheme-light">
+    
+  
+  <body class="preload-transitions colorscheme-auto">
     
 <div class="float-container">
     <a id="dark-mode-toggle" class="colorscheme-toggle">
@@ -79,6 +90,51 @@ if (LeVarez) let ueue = true; " />
     <a class="navigation-title" href="/">
       LeVarez Blog
     </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/about/">About</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/projects/">Projects</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/contact/">Contact me</a>
+            </li>
+          
+        
+        
+          
+          
+          
+            
+          
+            
+              
+                <li class="navigation-item menu-separator">
+                  <span>|</span>
+                </li>
+                
+              
+              <li class="navigation-item">
+                <a href="https://LeVarez.github.io/pt-br/">🇧🇷</a>
+              </li>
+            
+          
+        
+      </ul>
     
   </section>
 </nav>
@@ -118,7 +174,7 @@ if (LeVarez) let ueue = true; " />
       <div>
         
         <p>This is some content</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>LeVarez<span style="color:#f92672">)</span> let ueue <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">;</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">if</span> (LeVarez) let ueue = <span style="font-weight:bold">true</span>;
 </code></pre></div>
       </div>
 
@@ -142,8 +198,10 @@ if (LeVarez) let ueue = true; " />
   <section class="container">
     ©
     
-    2021
+      2019 -
     
+    2021
+     LeVarez 
     ·
     Powered by <a href="https://gohugo.io/">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/">Coder</a>.
     
