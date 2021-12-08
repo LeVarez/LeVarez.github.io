@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on LeVarez Blog</title>
+    <link>https://LeVarez.github.io/posts/</link>
+    <description>Recent content in Posts on LeVarez Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 08 Dec 2021 12:37:40 +0100</lastBuildDate><atom:link href="https://LeVarez.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>This the test post</title>
+      <link>https://LeVarez.github.io/posts/test1/</link>
+      <pubDate>Wed, 08 Dec 2021 12:37:40 +0100</pubDate>
+      
+      <guid>https://LeVarez.github.io/posts/test1/</guid>
+      <description>This is some content
+if (LeVarez) let ueue = true; </description>
+    </item>
+    
+  </channel>
+</rss>
