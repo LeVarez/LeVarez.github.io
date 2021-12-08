@@ -10,18 +10,21 @@
     
 
     <meta name="author" content="LeVarez">
-    <meta name="description" content="This is some content
-if (LeVarez) let ueue = true; ">
+    <meta name="description" content="Primero de todo, qué és la contaminación prototype? Como puede comprometer la seguridad de nuestro sistema?
+Este tipo de ataque se lleva a cavo en el lenguage de programación JavaScript, ya que este mismo és prototype-based. Todos los nuevos objetos que se crean llevan las propiedades y mètodos del objeto prototype, el cual contiene funcionalidades bàsicas como toString(), constructor() y hasOwnProperty().
+Los atacantes puedes hacer uso de esta característica del lenguaje para poder hacer canvios a todos los objetos de la aplicación haciendo una modificación al objeto prtototype.">
     <meta name="keywords" content="blog,developer,personal">
 
     <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Primer post"/>
-<meta name="twitter:description" content="This is some content
-if (LeVarez) let ueue = true; "/>
+<meta name="twitter:title" content="Prototype Pollution"/>
+<meta name="twitter:description" content="Primero de todo, qué és la contaminación prototype? Como puede comprometer la seguridad de nuestro sistema?
+Este tipo de ataque se lleva a cavo en el lenguage de programación JavaScript, ya que este mismo és prototype-based. Todos los nuevos objetos que se crean llevan las propiedades y mètodos del objeto prototype, el cual contiene funcionalidades bàsicas como toString(), constructor() y hasOwnProperty().
+Los atacantes puedes hacer uso de esta característica del lenguaje para poder hacer canvios a todos los objetos de la aplicación haciendo una modificación al objeto prtototype."/>
 
-    <meta property="og:title" content="Primer post" />
-<meta property="og:description" content="This is some content
-if (LeVarez) let ueue = true; " />
+    <meta property="og:title" content="Prototype Pollution" />
+<meta property="og:description" content="Primero de todo, qué és la contaminación prototype? Como puede comprometer la seguridad de nuestro sistema?
+Este tipo de ataque se lleva a cavo en el lenguage de programación JavaScript, ya que este mismo és prototype-based. Todos los nuevos objetos que se crean llevan las propiedades y mètodos del objeto prototype, el cual contiene funcionalidades bàsicas como toString(), constructor() y hasOwnProperty().
+Los atacantes puedes hacer uso de esta característica del lenguaje para poder hacer canvios a todos los objetos de la aplicación haciendo una modificación al objeto prtototype." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://LeVarez.github.io/posts/test1/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-10-08T12:37:40+01:00" />
@@ -30,7 +33,7 @@ if (LeVarez) let ueue = true; " />
 
 
     <title>
-  Primer post · LeVarez
+  Prototype Pollution · LeVarez
 </title>
 
     
@@ -115,7 +118,7 @@ if (LeVarez) let ueue = true; " />
         <div class="post-title">
           <h1 class="title">
             <a class="title-link" href="https://LeVarez.github.io/posts/test1/">
-              Primer post
+              Prototype Pollution
             </a>
           </h1>
         </div>
@@ -129,10 +132,12 @@ if (LeVarez) let ueue = true; " />
             </span>
             <span class="reading-time">
               <i class="fa fa-clock-o" aria-hidden="true"></i>
-              Un minuto de lectura
+              2 minutos de lectura.
             </span>
           </div>
-          
+          <div class="authors">
+    <i class="fa fa-user" aria-hidden="true"></i>
+      <a href="/authors/levarez/">LeVarez</a></div>
           
           
         </div>
@@ -140,9 +145,33 @@ if (LeVarez) let ueue = true; " />
 
       <div>
         
-        <p>This is some content</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>LeVarez<span style="color:#f92672">)</span> let ueue <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">;</span>
-</code></pre></div>
+        <p>Primero de todo, qué és la contaminación prototype? Como puede comprometer la seguridad de nuestro sistema?</p>
+<p>Este tipo de ataque se lleva a cavo en el lenguage de programación JavaScript, ya que este mismo és prototype-based. Todos los nuevos objetos que se crean llevan las propiedades y mètodos del objeto prototype, el cual contiene funcionalidades bàsicas como <code>toString()</code>, <code>constructor()</code> y <code>hasOwnProperty()</code>.</p>
+<p>Los atacantes puedes hacer uso de esta característica del lenguaje para poder hacer canvios a todos los objetos de la aplicación haciendo una modificación al objeto prtototype. De aquí el nombre de prtotype pollution.</p>
+<p>Este objeto puede ser accedido desde cualquier otro objeto a través del atributo <code>__proto__</code>. Y una vez este objeto es modificado todos los objetos de l&rsquo;aplicación en marcha seràn modificados, tanto los que se creen de nuevo como los que ya estavan creados antes de la modificación.</p>
+<p>A continuación vamos a ver un pequeño ejemplo de como és el comportamiento.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">let chocolate  <span style="color:#f92672">=</span> <span style="color:#f92672">{</span>
+    marca<span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;Chocolates LeVarez&#34;</span>
+    precio<span style="color:#f92672">:</span> 2
+<span style="color:#f92672">};</span>
+</code></pre></div><p>Si mostramos la salida de este objeto a través del mètodo <code>toString()</code> que viene predefinido en el objeto prototype podremos observar la siguiente salida:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">chocolate<span style="color:#f92672">.</span><span style="color:#a6e22e">toString</span><span style="color:#f92672">();</span>
+<span style="color:#75715e">//Output: &#39;[object Object]&#39;
+</span></code></pre></div><p>Ahora a traves de otro objeto nuevo podemos modificar el comportamiento de la funcion <code>toString()</code>. Accederemos a el a través de la propiedad <code>__proto__</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">let chocolateConLeche  <span style="color:#f92672">=</span> <span style="color:#f92672">{</span>
+    marca<span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;Chocolates LeVarez&#34;</span><span style="color:#f92672">,</span>
+    precio<span style="color:#f92672">:</span> 3
+<span style="color:#f92672">};</span>
+
+chocolateConLeche<span style="color:#f92672">.</span><span style="color:#a6e22e">__proto__</span><span style="color:#f92672">.</span><span style="color:#a6e22e">toString</span> <span style="color:#f92672">=</span> <span style="color:#f92672">()</span> <span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">;</span>
+
+chocolate<span style="color:#f92672">.</span><span style="color:#a6e22e">toString</span><span style="color:#f92672">();</span>
+<span style="color:#75715e">//Output: True
+</span></code></pre></div><p>Ahora se ha cambiado completamente el comportamiento de la función toString en todos los objetos del programa, de tener un valor de retorno una cadena de caràcteres (String) ahora tiene un valor Boolean. Si en nuestra aplicación se canvian los estos valores podria provocar un crasheo de la apliacion.</p>
+<p>Teniendo esto en cuenta ahora vamos a ver los AST (Abstract node tree). Los AST són la representació de árbol de la estructura sintáctica simplificada del código fuente escrito en cierto lenguaje de programación. Los AST són utilizados muy a menudo en JavaScript como plantillas de motores, typescript&hellip;</p>
+<p>A continuación podemos ver como es el AST de nodeJS:</p>
+<p><img src="/test.png" alt="Example image"></p>
+
       </div>
 
 
