@@ -132,7 +132,7 @@ Los atacantes puedes hacer uso de esta característica del lenguaje para poder h
             </span>
             <span class="reading-time">
               <i class="fa fa-clock-o" aria-hidden="true"></i>
-              15 minutos de lectura.
+              16 minutos de lectura.
             </span>
           </div>
           <div class="authors">
@@ -261,7 +261,7 @@ Los atacantes puedes hacer uso de esta característica del lenguaje para poder h
 <span style="color:#a6e22e">chocolateDelVacio</span>.<span style="color:#a6e22e">contaminado</span>
 <span style="color:#75715e">//Output: &#39;estoy contaminado&#39;
 </span></code></pre></div><p>Por lo que nunca debemos dar al usuario control absoluto de la entrada de la ruta. ¿Visto todo esto cuáles son los posibles ataques que se podrían realizar a través de prototype pollution?</p>
-<p>¿Si pensamos, en muchos programas puede ser que haya una call de todas propiedades de un objeto, que pasaría si una de estas propiedades fuera recursiva a sí misma? ¡Asi es! Stack Overflow!</p>
+<p>¿Si pensamos, en muchos programas puede ser que haya una call de todas propiedades de un objeto, que pasaría si una de estas propiedades fuera recursiva a sí misma? ¡Así es! Stack Overflow!</p>
 <p>Como puede efectuarse esto? Bien, como hemos dicho todos los objetos se crean a partir del objeto prototype, por lo que si tiene una propiedad que si contaminamos con una propiedad que solo contenga un objeto vació este se va a contener a sí mismo recursivamente.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">Object.<span style="color:#a6e22e">prototype</span>.<span style="color:#a6e22e">nada</span> <span style="color:#f92672">=</span> {}
 ({}).<span style="color:#a6e22e">nada</span>.<span style="color:#a6e22e">nada</span>.<span style="color:#a6e22e">nada</span>.<span style="color:#a6e22e">nada</span> <span style="color:#f92672">===</span> ({}).<span style="color:#a6e22e">nada</span>;
@@ -278,7 +278,7 @@ Los atacantes puedes hacer uso de esta característica del lenguaje para poder h
 <p>A continuación podemos ver como es el AST de nodeJS usando <code>handlebars</code>:</p>
 <p><img src="/nodejsast.png#center" alt="NodeJS AST"></p>
 <p>En la foto anterior podemos observar que nuestra plantilla de handlebars sigue una serie de pasos hasta ser compilado. Tenemos nuestra plantilla que la pasamos por un lexer. El lexer es una herramienta que se encarga de convertir el texto a una lista de tokens para procesar posteriormente. Normalmente se usa para crear lenguajes de programación pero a veces también para el procesamiento de texto entre otras cosas <a href="https://dev.to/areknawo/lexing-in-js-style--b5e">[ 3 ]</a>.</p>
-<p>Una vez tenemos los tokens el siguiente paso es el parser o analizador sintáctico. El parser es un programa que analiza una cadena de tokens según las reglas de la gramática del lenguaje. El parser convierte los tokens de entrada en otras estructuras (comúnmente árboles). Que son más útiles para el posterior anàlisis, ya que capturan la jerarquía de la entrada, estos son nombrados árboles de sintaxis abstracta.</p>
+<p>Una vez tenemos los tokens el siguiente paso es el parser o analizador sintáctico. El parser es un programa que analiza una cadena de tokens según las reglas de la gramática del lenguaje. El parser convierte los tokens de entrada en otras estructuras (comúnmente árboles). Que son más útiles para el posterior análisis, ya que capturan la jerarquía de la entrada, estos son nombrados árboles de sintaxis abstracta.</p>
 <p>Veamos con un ejemplo fácil como esto funciona. Imaginemos la entrada <code>12*(3+4)^2</code> de una calculadora. El lexer generaría los siguientes tokens <code>12, *, (, 3, +, 4, ), ^ y 2</code> (análisis léxico), el parser contendrá las reglas necesarias para indicar que los símbolos <code>*, (, +, ) y ^</code> indican el comienzo de un nuevo token. Lo siguiente es un análisis sintáctico para comprobar que el conjunto de tokens forman una expresión válida y por último queda el análisis sintáctico que evalúa la expresión <a href="https://www.techopedia.com/definition/3854/parser">[ 4 ]</a><a href="https://es.wikipedia.org/wiki/Analizador_sint%C3%A1ctico">[ 5 ]</a>. Los siguientes pasos sería la compilación del AST a lenguaje máquina y la ejecución del código.</p>
 <p>Entonces a través de la propiedad prototype se podría insertar código durante las operaciones del Parser o del Compilador. En la imagen que se muestra a es un esquema del concepto de inserción de código a través de la contaminación del objeto prototype.</p>
 <p><img src="/nodejsastpolluted.png#center" alt="NodeJS AST Polluted"></p>
@@ -290,6 +290,7 @@ Los atacantes puedes hacer uso de esta característica del lenguaje para poder h
     <i class="fa fa-link" aria-hidden="true"></i>
   </a>
 </h1>
+<p>Handlebars sirve para generar HTML a partir de objetos con datos en formato JSON. Handlebars es un popular sistema de plantillas en Javascript que te permite crear y formatear código HTML de una manera muy sencilla.</p>
 <p>Podemos comprobar si nuestro programa es o no vulnerable a este tipo de ataques, para hacerlo tenemos que ejecutar el siguiente código, si observamos que se ha inserido el contenido de pending content que se ha puesto de forma artificial, es decir, hardcoded, entonces podremos decir que la versión actual de handlebars puede sufrir este tipo de ataques.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">Handlebars</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;handlebars&#39;</span>);
 
@@ -415,7 +416,7 @@ Object.<span style="color:#a6e22e">prototype</span>.<span style="color:#a6e22e">
         }
     }]
 }
-</code></pre></div><p>Podemos observar que esta peticion lo que pretende es contaminar los objectos con los campos type y body con los campos especificos para que al ejectutar la funcion compile de modulo de handlevasr nos permita ejecutar codigo remoto. Para que esto sea efectivo voy a mostrar una pequeña muestra de como tendria que funcionar el servidor para que esto ocurriese.</p>
+</code></pre></div><p>Podemos observar que esta petición lo que pretende es contaminar los objectos con los campos type y body con los campos específicos para que al ejecutar la función compile de módulo de handlevasr nos permita ejecutar código remoto. Para que esto sea efectivo voy a mostrar una pequeña muestra de cómo tendría que funcionar el servidor para que esto ocurriese.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">express</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;express&#39;</span>);
 <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">unflatten</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;flat&#39;</span>).<span style="color:#a6e22e">unflatten</span>;
 <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">bodyParser</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;body-parser&#39;</span>);
@@ -478,7 +479,7 @@ Object.<span style="color:#a6e22e">prototype</span>.<span style="color:#a6e22e">
         }
         <span style="color:#66d9ef">break</span>;
     ...
-</code></pre></div><p>Cuando <code>ast.type</code> es cualquier valor desde <code>case</code> hasta <code>While</code>, llama a la función walkAST la cual pasa como parámetro <code>ast.block</code> el cual hace referencia al objeto prototype si este no está definido. El detalle esta en que si la plantilla hace referencia a cualquier valor de los argumentos, el nodo While siempre va a existir. Es decir que siempre estarán definidos en la plantilla, ya que si no necesita hacer referencia de ninguno de estos valores no necesitaría i/o debería usar este módulo o cualquier otro de templates engines.</p>
+</code></pre></div><p>Cuando <code>ast.type</code> es cualquier valor desde <code>case</code> hasta <code>While</code>, llama a la función walkAST la cual pasa como parámetro <code>ast.block</code> el cual hace referencia al objeto prototype si este no está definido. El detalle está en que si la plantilla hace referencia a cualquier valor de los argumentos, el nodo While siempre va a existir. Es decir que siempre estarán definidos en la plantilla, ya que si no necesita hacer referencia de ninguno de estos valores no necesitaría i/o debería usar este módulo o cualquier otro de templates engines.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#960050;background-color:#1e0010">/node_modules/pug-code-gen/index.js</span>
 
 <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">debug</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">node</span>.<span style="color:#a6e22e">debug</span> <span style="color:#f92672">!==</span> <span style="color:#66d9ef">false</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">node</span>.<span style="color:#a6e22e">type</span> <span style="color:#f92672">!==</span> <span style="color:#e6db74">&#39;Block&#39;</span>) {
@@ -490,7 +491,7 @@ Object.<span style="color:#a6e22e">prototype</span>.<span style="color:#a6e22e">
     }
 }
 </code></pre></div><p>En este fragmento de código podemos observar que la variable <code>pug_debug_line</code> guarda el valor de la línea del nodo y posteriormente se añade en el buffer. Anteriormente, se hace la comprobación de que este valor exista para ser añadido, pero lo interesante es que todos los AST que se generan a partir del parser de pug ya tienen la línea especificada. Por lo que podemos preguntar: ¿Qué pasaría si en vez de poner un número introducimos una cadena? ¡Exacto! Esta cadena se guarda en el buffer.</p>
-<p>Por lo que si tenemos en cuenta los que hemos dicho anteriormente de que si tenemos la referencia de alguno de los argumentos en la template si o si se va a generar el nodo While, por lo que se va a ejecutar la línea walkAST y que esta va a usar el valor del objeto prototype si no está definido y que posteriormente también se va a ejecutar la línea de código anterior donde se añadía el valor de <code>line</code> en el buffer. Entonces si contaminamos el programa con un objeto prototype con valores <code>block</code> y <code>line</code> concretos podemos llegar a ejecutar código remoto. Vamos a ver:</p>
+<p>Por lo que, si tenemos en cuenta los que hemos dicho anteriormente de que, si tenemos la referencia de alguno de los argumentos en la template si o si se va a generar el nodo While, por lo que se va a ejecutar la línea walkAST y que esta va a usar el valor del objeto prototype si no está definido y que posteriormente también se va a ejecutar la línea de código anterior donde se añadía el valor de <code>line</code> en el buffer. Entonces si contaminamos el programa con un objeto prototype con valores <code>block</code> y <code>line</code> concretos podemos llegar a ejecutar código remoto. Vamos a ver:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">{
     <span style="color:#e6db74">&#34;__proto__.block&#34;</span><span style="color:#f92672">:</span> {
         <span style="color:#e6db74">&#34;type&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;Text&#34;</span>,
@@ -498,6 +499,7 @@ Object.<span style="color:#a6e22e">prototype</span>.<span style="color:#a6e22e">
     }
 }
 </code></pre></div><p>Si conseguimos de alguna forma contaminar el programa con estos datos y tenemos en cuenta lo que hemos dicho anteriormente, conseguiremos escribir en la consola del servidor donde esté alojado el programa la frase: &ldquo;Buenos dias, quiero macarrones&rdquo;. Para poder hacer un ejemplo podemos utilizar el código anterior y hacer uso del módulo <code>flat</code> el cual tiene una vulnerabilidad que permite hacer contaminación prototype.</p>
+<p>A continuación, Podemos ver como ser vería un ejemplo sencillo del servidor que se encargaría de servir las peticiones de la página web:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">express</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;express&#39;</span>);
 <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">unflatten</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;flat&#39;</span>).<span style="color:#a6e22e">unflatten</span>;
 <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">bodyParser</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;body-parser&#39;</span>);
