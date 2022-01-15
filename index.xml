@@ -9,13 +9,13 @@
     <lastBuildDate>Wed, 08 Dec 2021 12:37:40 +0100</lastBuildDate><atom:link href="https://LeVarez.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Prototype Pollution</title>
-      <link>https://LeVarez.github.io/posts/test1/</link>
+      <link>https://LeVarez.github.io/posts/prototypepollution/</link>
       <pubDate>Wed, 08 Dec 2021 12:37:40 +0100</pubDate>
       
-      <guid>https://LeVarez.github.io/posts/test1/</guid>
-      <description>Prototype PollutionPrimero de todo, qué és la contaminación prototype? Como puede comprometer la seguridad de nuestro sistema?
-Este tipo de ataque se lleva a cavo en el lenguage de programación JavaScript, ya que este mismo és prototype-based. Todos los nuevos objetos que se crean llevan las propiedades y mètodos del objeto prototype, el cual contiene funcionalidades bàsicas como toString(), constructor() y hasOwnProperty().
-Los atacantes puedes hacer uso de esta característica del lenguaje para poder hacer canvios a todos los objetos de la aplicación haciendo una modificación al objeto prtototype.</description>
+      <guid>https://LeVarez.github.io/posts/prototypepollution/</guid>
+      <description>Prototype PollutionPrimero de todo, ¿qué es la contaminación prototype? ¿Como puede comprometer la seguridad de nuestro sistema?
+Este tipo de ataque se lleva a cavo en el lenguaje de programación JavaScript, ya que este mismo es prototype-based. Todos los nuevos objetos que se crean llevan las propiedades y métodos del objeto prototype, el cual contiene funcionalidades básicas como toString(), constructor() y hasOwnProperty().
+Los atacantes puedes hacer uso de esta característica del lenguaje para poder hacer cambios a todos los objetos de la aplicación haciendo una modificación al objeto prototype.</description>
     </item>
     
   </channel>
